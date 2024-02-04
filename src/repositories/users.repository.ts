@@ -4,7 +4,7 @@ import { ReturnModelType, mongoose } from "@typegoose/typegoose";
 import { User } from "../api/users/schema/users.schema";
 import { IUserRepository } from "./interface/users.interface";
 import { CreateUserDto } from "../api/users/dto/users.dto";
-import { Users } from "src/api/users/entities/users.entities";
+import { Users } from "../api/users/entities/users.entities";
 
 
 @Injectable()

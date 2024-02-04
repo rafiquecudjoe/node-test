@@ -8,7 +8,8 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { ResponseWithData, ResponseWithoutData } from '../../common/entities/response.entity';
+import { ResponseWithoutData } from '../../common/entities/response.entity';
+import { GetUserByIdSuccessResponse } from './entities/users.entities';
 
 @ApiTags("Users")
 @Controller('api/users')
@@ -21,7 +22,7 @@ export class UsersController {
   })
   @ApiOkResponse({
     description: 'Retrieved successfully',
-    type: ResponseWithData,
+    type: GetUserByIdSuccessResponse,
   })
   @ApiBadRequestResponse({
     description: 'Bad Request: Validation error',

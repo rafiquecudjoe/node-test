@@ -24,17 +24,19 @@ export function generateSuccessResponse(response: RequestResponse) {
   };
 }
 
-export function generateErrorResponse(error: CaughtError) {
+export function generateErrorResponse(error: CaughtError,requestBody:any) {
   if (!error.code || typeof error.code === 'string')
     return {
       status: HttpStatus.INTERNAL_SERVER_ERROR,
       message: Constants.ServerError,
       error: error.message,
+      requestBody
     };
 
   return {
     status: error.code,
     message: error.message,
+    requestBody
   };
 }
 

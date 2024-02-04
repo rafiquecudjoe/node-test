@@ -3,6 +3,7 @@ import { generateErrorResponse, generateSuccessResponse, throwError } from '../.
 import { UsersRepository } from '../../repositories/users.repository';
 import { UsersValidator } from './users.validator';
 import { ResponseWithData } from 'src/common/entities/response.entity';
+import logger from '../../utils/logger';
 
 @Injectable({})
 export class UsersService {
@@ -17,6 +18,7 @@ export class UsersService {
 
       const user = await this.usersRepository.getUserById(userId);
       if (!user) {
+        logger.info(`User not found :${userId}`)
         throwError('User not found', HttpStatus.NOT_FOUND);
       }
 
@@ -27,7 +29,8 @@ export class UsersService {
       });
 
     } catch (error) {
-      return generateErrorResponse(error);
+      logger.info(`Error ${error}: Dto ${userId}`)
+      return generateErrorResponse(error,userId);
     }
   }
 }

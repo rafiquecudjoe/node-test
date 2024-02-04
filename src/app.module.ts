@@ -8,6 +8,8 @@ import { KindagooseModule } from 'kindagoose';
 import { UsersModule } from './api/users/users.module';
 import { RepositoriesModule } from './repositories/repositories.module';
 import { config } from './config/config';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -18,11 +20,21 @@ import { config } from './config/config';
     TerminusModule,
     UsersModule,
     ScheduleModule.forRoot(),
-    RepositoriesModule
+    RepositoriesModule,
+    ThrottlerModule.forRoot([
+      {
+        ttl: 10000,
+        limit: 3,
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [
-    AppService,
+    AppService, {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    }
+
   ],
 })
 export class AppModule implements NestModule {
